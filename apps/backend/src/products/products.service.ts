@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Product } from './interfaces/product.interface';
 import { CreateProductDto } from './dto/create-product.dto';
 
@@ -44,7 +44,7 @@ export class ProductsService {
     return this.products;
   }
 
-  findOne(id: string): Product {
+  findOne(id: string): Product | undefined {
     return this.products.find((product) => product.id === id);
   }
 
@@ -61,7 +61,7 @@ export class ProductsService {
   update(id: string, updateProductDto: Partial<CreateProductDto>): Product {
     const productIndex = this.products.findIndex((p) => p.id === id);
     if (productIndex === -1) {
-      throw new Error('Product not found');
+      throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
     }
     this.products[productIndex] = {
       ...this.products[productIndex],
@@ -73,7 +73,7 @@ export class ProductsService {
   delete(id: string): void {
     const productIndex = this.products.findIndex((p) => p.id === id);
     if (productIndex === -1) {
-      throw new Error('Product not found');
+      throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
     }
     this.products.splice(productIndex, 1);
   }

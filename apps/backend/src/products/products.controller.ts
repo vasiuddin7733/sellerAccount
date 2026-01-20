@@ -6,10 +6,12 @@ import {
   Delete,
   Body,
   Param,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
-import { Product } from './interfaces/product.interface';
+import type { Product } from './interfaces/product.interface';
 
 @Controller('api/products')
 export class ProductsController {
@@ -22,7 +24,11 @@ export class ProductsController {
 
   @Get(':id')
   findOne(@Param('id') id: string): Product {
-    return this.productsService.findOne(id);
+    const product = this.productsService.findOne(id);
+    if (!product) {
+      throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
+    }
+    return product;
   }
 
   @Post()
