@@ -1,0 +1,21 @@
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  image: string;
+  seller: string;
+  stock: number;
+  createdAt: string;
+}
+
+export interface CreateProductDto {
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  image: string;
+  seller: string;
+  stock: number;
+}
