@@ -1,0 +1,10 @@
+node_modules
+dist
+.turbo
+.DS_Store
+*.log
+*.tmp
+tmp
+apps/*/dist
+apps/*/node_modules
+
